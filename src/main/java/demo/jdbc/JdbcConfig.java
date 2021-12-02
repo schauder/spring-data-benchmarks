@@ -16,22 +16,4 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootApplication
 @EnableJdbcAuditing
 @EnableJdbcRepositories(basePackages = "demo.jdbc")
-public class JdbcConfig extends AbstractJdbcConfiguration {
-	
-	@Bean
-	PlatformTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
-	}
-
-	@Bean
-	public DataSource dataSource() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("dbinit.sql").build();
-	}
-
-	@Bean
-	public NamedParameterJdbcTemplate namedTemplate(DataSource dataSource) {
-		return new NamedParameterJdbcTemplate(dataSource);
-	}
-
-
-}
+public class JdbcConfig{}

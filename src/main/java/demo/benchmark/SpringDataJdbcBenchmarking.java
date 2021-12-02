@@ -21,9 +21,6 @@ import demo.jdbc.Product;
 import demo.jdbc.ProductRepository;
 
 @State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
-@Warmup(iterations = 10)
-@Measurement(iterations = 10)
 public class SpringDataJdbcBenchmarking {
 	
 	private ProductRepository productJdbcRepository;
@@ -58,15 +55,15 @@ public class SpringDataJdbcBenchmarking {
         product.setName("phone");
         return productJdbcRepository.save(product);
     }
-	
-	
-    public static void main(String... args) throws Exception {
-        Options opts = new OptionsBuilder().include(".*")
-                .warmupIterations(5)
-                .measurementIterations(5)
-                .mode(Mode.AverageTime)
-                .timeUnit(TimeUnit.NANOSECONDS).jvmArgs("-server").forks(1).resultFormat(ResultFormatType.TEXT).build();
 
-        new Runner(opts).run();
-    }
+	public static void main(String[] args) {
+
+		final SpringDataJdbcBenchmarking bm = new SpringDataJdbcBenchmarking();
+		bm.initEm();
+		final long start = System.currentTimeMillis();
+		bm.springDataJdbcQuery();
+		final long end = System.currentTimeMillis();
+		System.out.println(end - start);
+
+	}
 }

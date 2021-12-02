@@ -11,8 +11,8 @@
 	<root level="info">
 		<appender-ref ref="STDOUT" />
 	</root>
-	<logger name="org.springframework.jdbc.core"
-		level="info">
+	<logger name="org.springframework.jdbc.core.JdbcTemplate"
+		level="debug">
 		<appender-ref ref="STDOUT" />
 	</logger>
 

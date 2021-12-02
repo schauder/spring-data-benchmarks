@@ -16,6 +16,7 @@ import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import demo.jpa.JpaConfig;
@@ -23,11 +24,8 @@ import demo.jpa.Product;
 import demo.jpa.ProductRepository;
 
 @State(Scope.Thread)
-@BenchmarkMode(Mode.AverageTime)
-@Warmup(iterations = 10)
-@Measurement(iterations = 10)
 public class SpringDataJpaBenchmarking {
-	
+
 	private ProductRepository productRepository;
 	
 	private int id;
@@ -64,15 +62,15 @@ public class SpringDataJpaBenchmarking {
         product.setName("phone");
         return productRepository.save(product);
     }
-    
 
-    public static void main(String... args) throws Exception {
-        Options opts = new OptionsBuilder().include(".*")
-                .warmupIterations(5)
-                .measurementIterations(5)
-                .mode(Mode.AverageTime)
-                .timeUnit(TimeUnit.NANOSECONDS).jvmArgs("-server").forks(1).resultFormat(ResultFormatType.TEXT).build();
 
-        new Runner(opts).run();
-    }
+	public static void main(String[] args) {
+
+		final SpringDataJpaBenchmarking bm = new SpringDataJpaBenchmarking();
+		bm.initEm();
+		final long start = System.currentTimeMillis();
+		bm.springDataJpaQuery();
+		final long end = System.currentTimeMillis();
+		System.out.println(end - start);
+	}
 }
