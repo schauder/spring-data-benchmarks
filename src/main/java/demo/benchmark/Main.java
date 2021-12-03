@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
 	public static void main(String... args) throws Exception {
-		Options opts = new OptionsBuilder().include(".*Jdbc*")
+		Options opts = new OptionsBuilder().include(".*")
 				.warmupIterations(5)
 				.measurementIterations(5)
 				.mode(Mode.AverageTime)
